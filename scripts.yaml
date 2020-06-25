@@ -1,0 +1,53 @@
+chicken_room_motion:
+  sequence:
+  - condition: state
+    entity_id: binary_sensor.motion_sensor_1
+    state: 'on'
+  - data:
+      message: Có người di chuyển.
+      name: 'Phòng Bếp:'
+    service: logbook.log
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: sun.sun
+      state: below_horizon
+    - after: '20:00:00'
+      before: 05:30:00
+      condition: time
+  - entity_id: switch.t1_pb_led_low
+    service: switch.turn_on
+  - timeout: 01:00:00
+    wait_template: '{{ ((as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_sensor_1.last_changed))
+      < 1800) and (is_state(''binary_sensor.motion_sensor_1'', ''off'')) }}'
+  - entity_id: switch.t1_pb_led_low
+    service: switch.turn_off
+  - data:
+      message: Trống
+      name: 'Phòng Bếp:'
+    service: logbook.log
+  alias: Tự động bật đèn bếp
+'1588904820871':
+  alias: Tưới cây
+  sequence:
+  - data: {}
+    entity_id: switch.van_nuoc
+    service: switch.turn_on
+  - delay: 00:00:02
+  - condition: state
+    entity_id: switch.van_nuoc
+    state: 'on'
+  - data: {}
+    entity_id: switch.phun_suong
+    service: switch.turn_on
+  - delay: 00:05:00
+  - data: {}
+    entity_id: switch.phun_suong
+    service: switch.turn_off
+  - delay: 00:00:10
+  - condition: state
+    entity_id: switch.phun_suong
+    state: 'off'
+  - data: {}
+    entity_id: switch.van_nuoc
+    service: switch.turn_off

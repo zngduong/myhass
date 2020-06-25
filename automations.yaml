@@ -1,0 +1,180 @@
+- alias: Cube rotate
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00028aed1a
+      action_type: rotate
+  action:
+  - service: switch.toggle
+    data_template:
+      entity_id: '{% if trigger.event.data.action_value | float > 0 %} switch.t2_pdl_loa_tang
+        {% else %} switch.t2_pdl_loa_giam {% endif %}
+
+        '
+  id: faf4280e3672444c8d69a807c23ec499
+- alias: Cube event flip90
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00028aed1a
+      action_type: flip90
+  action:
+  - service: switch.toggle
+    entity_id: switch.t2_pdl_loa_input
+  - delay: 00:00:01
+  - service: switch.toggle
+    entity_id: switch.t2_pdl_loa_input
+  - delay: 00:00:01
+  - service: switch.toggle
+    entity_id: switch.t2_pdl_loa_input
+  id: 6528b7e413ff4462921ab8d2706affa4
+- alias: Cube event flip180
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00028aed1a
+      action_type: flip180
+  action:
+  - service: switch.toggle
+    entity_id: switch.plug_158d000247f25a
+  id: 67df229855cc48039a68750e685b8393
+- alias: Cube event tap_twice
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00028aed1a
+      action_type: tap_twice
+  action:
+  - service: switch.toggle
+    entity_id: switch.t2_pdl_loa_mute
+  id: 93bf6d6e452148e29b74526c959e4252
+- alias: Cube event shake_air
+  trigger:
+    platform: event
+    event_type: xiaomi_aqara.cube_action
+    event_data:
+      entity_id: binary_sensor.cube_158d00028aed1a
+      action_type: shake_air
+  action:
+  - service: switch.toggle
+    entity_id: switch.t2_pdl_loa_power
+  id: 41020be97c554977b8a6a5d4dd5b5682
+- alias: Sensor turn on light master room
+  trigger:
+    platform: state
+    entity_id: binary_sensor.door_window_sensor_1
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_sensor_2.last_changed))
+      < 10 }}
+
+      '
+  - condition: time
+    after: '17:30:00'
+    before: 00:00:00
+  action:
+  - service: switch.turn_on
+    entity_id: switch.t2_pdl_ngu_hight
+  id: 0d6be32579b14a5aab68c3d3f620f774
+- id: 14c90002cdde436ca3feaff49cd3fad3
+  alias: Sensor event turn light on T3
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_3
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_sensor_2.last_changed))
+      < 10 }}
+
+      '
+  - after: sunset
+    before: sunrise
+    condition: sun
+  action:
+  - entity_id: switch.wall_switch_hanh_lan
+    service: switch.turn_on
+- alias: Sensor event turn light off T3
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_2
+    to: 'on'
+  condition:
+  - condition: template
+    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_sensor_2.last_changed))
+      < 10 }}
+
+      '
+  - condition: time
+    after: '18:00:00'
+    before: 05:30:00
+  action:
+  - service: switch.turn_off
+    entity_id: switch.wall_switch_hanh_lan
+  id: b22615a4f0bd4637be7fc6afc7cc8985
+- alias: Sensor event turn light on chicken room
+  trigger:
+    platform: state
+    entity_id: binary_sensor.motion_sensor_1
+    to: 'on'
+  action:
+  - service: script.turn_on
+    entity_id: script.chicken_room_motion
+  id: fb340b4dff7f4f61a4f7775ec95b3e37
+- id: '1587957962336'
+  alias: Bật đèn phòng ngủ
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.door_window_sensor_1
+    from: Closed
+    platform: state
+    to: Open
+  condition:
+  - condition: template
+    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_sensor_2.last_changed))
+      < 10 }}'
+  action:
+  - data: {}
+    entity_id: switch.t2_pdl_ngu_hight
+    service: switch.turn_on
+- id: '1588679607431'
+  alias: Tự bật đèn phòng khách
+  description: ''
+  trigger:
+  - event: sunset
+    platform: sun
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.t1_pk_led_hight
+    service: switch.turn_on
+- id: '1588679799344'
+  alias: Tự bật đèn cổng
+  description: ''
+  trigger:
+  - at: '18:00:00'
+    platform: time
+  condition:
+  - after: '18:00:00'
+    before: '18:20:00'
+    condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - data: {}
+    entity_id: switch.t1_cong_led
+    service: switch.turn_on
+  - delay: 00:00:30
+  - data: {}
+    entity_id: switch.t1_cong_led
+    service: switch.turn_off

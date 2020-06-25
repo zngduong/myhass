@@ -1,0 +1,146 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: CuChuoi's Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 10
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Ho_Chi_Minh
+  # Customization file
+  # customize: !include customize.yaml
+  #auth_providers:
+    #- type: homeassistant
+    #- type: legacy_api_password
+      #api_password: !secret api_password
+
+system_health:
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+ifttt:
+  key: !secret ifttt_key
+
+xiaomi_aqara:
+  discovery_retry: 5
+  gateways:
+    - mac: !secret mi_gw_mac
+      key: !secret mi_gw_key
+#
+#
+
+switch: !include switchs.yaml
+
+#smartir:
+#climate:
+  #- platform: smartir
+    #name: Bedroom AC
+    #unique_id: bedroom_ac
+    #device_code: 1105
+    #controller_data: 192.168.1.12
+    #temperature_sensor: sensor.temperature
+    #humidity_sensor: sensor.humidity
+    #power_sensor: binary_sensor.ac_power
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret api_password
+  base_url: !secret base_url
+  use_x_forwarded_for: true
+  trusted_proxies: 172.17.0.1
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+# Optional, allows Home Assistant developers to focus on popular components.
+# include_used_components: true
+
+mobile_app:
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+  include:
+    domains:
+      - binary_sensor
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components: info
+    homeassistant.components.rfxtrx: debug
+    homeassistant.components.camera: critical
+
+# Enables a map showing the location of tracked devices
+map:
+
+stream:
+ffmpeg:
+camera:
+  - platform: ffmpeg
+    name: gate-camera 
+    input: -rtsp_transport tcp -i rtsp://192.168.1.133/ch0_1.h264
+  - platform: ffmpeg
+    name: kitchen-camera 
+    input: -rtsp_transport tcp -i rtsp://192.168.1.40/ch0_1.h264
+
+device_tracker:
+# Track the sun
+sun:
+
+# Weather prediction
+sensor: !include sensor.yaml
+binary_sensor:
+  - platform: mqtt
+    name: "gate_motion_sensor"
+    state_topic: "gatecam/motion"
+    qos: 1
+    payload_on: "motion_start"
+    payload_off: "motion_stop"
+    device_class: motion
+  - platform: mqtt
+    name: "kitchen_motion_sensor"
+    state_topic: "kitchencam/motion"
+    qos: 1
+    payload_on: "motion_start"
+    payload_off: "motion_stop"
+    device_class: motion
+
+light:
+  - platform: cololight
+    host: 192.168.1.79 
+# Text to speech
+tts:
+  - platform: google_translate
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+    base_url: !secret base_url
+    service_name: google_say
+    language: 'vi'
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

@@ -1,0 +1,181 @@
+# vim:ft=ansible:
+# switchs
+#############
+- platform: mqtt
+  name: "Nước nóng"
+  state_topic: "stat/sonoffpow1/RESULT"
+  value_template: "{{ value_json.POWER }}"
+  command_topic: "cmnd/sonoffpow1/POWER"
+  availability_topic: "tele/sonoffpow1/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Đèn hắc cửa"
+  state_topic: "stat/sonoffdual1/RESULT"
+  value_template: "{{ value_json.POWER1 }}"
+  command_topic: "cmnd/sonoffdual1/POWER1"
+  availability_topic: "tele/sonoffdual1/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Đèn hắc tivi"
+  state_topic: "stat/sonoffdual1/RESULT"
+  value_template: "{{ value_json.POWER2 }}"
+  command_topic: "cmnd/sonoffdual1/POWER2"
+  availability_topic: "tele/sonoffdual1/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Phun sương"
+  state_topic: "stat/sonoffdual2/RESULT"
+  value_template: "{{ value_json.POWER1 }}"
+  command_topic: "cmnd/sonoffdual2/POWER1"
+  availability_topic: "tele/sonoffdual2/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: mqtt
+  name: "Van nước"
+  state_topic: "stat/sonoffdual2/RESULT"
+  value_template: "{{ value_json.POWER2 }}"
+  command_topic: "cmnd/sonoffdual2/POWER2"
+  availability_topic: "tele/sonoffdual2/LWT"
+  qos: 1
+  payload_on: "ON"
+  payload_off: "OFF"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  retain: true
+- platform: broadlink
+  host: 192.168.1.11
+  mac: '78:0F:77:17:F1:2D'
+  timeout: 15
+  switches:
+    t1_hien_led:
+      friendly_name: 'Đèn Hiên'
+      command_on: '6RRGAN8JFgkWCQkWCRYJFgkWCRYJFgkWCRYJFhYJFgkJFgkWCRYJFgkWFgkWCQkWCRYWCRYJFgkWCRYJCRYJFhYJFgkWCQkAAUg='
+      command_off: '6RRGAN8JFgkJFgkWCRYJFhYJFgkWCRYJCRYWCQkWFgkJFgkWCRYWCQkWCRYJFhYJCRYJFhYJFgkWCRYJCRYJFgkWCRYWCQkAAUg='
+    t1_cong_led:
+      friendly_name: 'Đèn Cổng'
+      command_on: '6RRGAN8JCRYJFhYJFgkJFgkWCRYJFhYJFgkWCRYJFgkJFhYJCRYJFgkWFgkJFgkWFgkWCRYJFgkWCRYJFgkJFgkWFgkJFgkAAUg='
+      command_off: '6RRGAN8JCRYJFgkWFgkWCRYJCRYJFgkWFgkJFhYJFgkJFhYJCRYJFgkWFgkJFgkWFgkWCQkWCRYWCRYJCRYWCRYJFgkWCQkAAUg='
+    t1_pk_led_low:
+      friendly_name: 'Đèn Phòng Khách 1'
+      command_on: '6RRGAN8JCRYWCRYJFgkJFhYJFgkWCQkWCRYJFgkWFgkJFgkWFgkJFhYJFgkWCQkWCRYJFgkWCRYJFhYJFgkJFgkWCRYWCQkAAUg='
+      command_off: '6RRGAN8JCRYJFgkWCRYJFgkWFgkJFhYJCRYWCQkWCRYWCQkWCRYJFhYJFgkJFgkWCRYWCRYJFgkWCQkWFgkJFhYJCRYJFgkAAUg='
+    t1_pk_led_hight:
+      friendly_name: 'Đèn Phòng Khách 2'
+      command_on: '6RRGAN8JFgkJFgkWFgkWCRYJCRYWCRYJCRYWCQkWFgkWCQkWFgkWCQkWFgkWCRYJCRYWCQkWFgkWCQkWFgkJFgkWFgkWCQkAAUg='
+      command_off: '6RRGAN8JFgkJFhYJCRYJFhYJCRYJFhYJFgkJFgkWFgkWCRYJCRYJFhYJCRYWCRYJCRYJFgkWCRYWCQkWCRYWCRYJCRYWCQkAAUg='
+    t1_pk_tuyt:
+      friendly_name: 'Đèn Tuýt Phòng Khách'
+      command_on: '6RRGAN8JFgkJFhYJFgkJFhYJFgkWCQkWCRYJFgkWCRYJFhYJCRYJFhYJFgkJFhYJCRYJFgkWFgkWCQkWCRYJFgkWFgkJFgkAAUg='
+      command_off: '6RRGAN8JCRYJFhYJFgkWCRYJFgkJFgkWFgkJFgkWCRYWCRYJFgkWCQkWCRYJFgkWCRYWCRYJFgkWCRYJFgkWCQkWCRYJFgkAAUg='
+    t1_pb_tuyt:
+      friendly_name: 'Đèn Tuýt Phòng Bếp'
+      command_on: '6RRGAN8JFgkWCQkWCRYJFhYJFgkJFhYJCRYWCRYJCRYWCQkWFgkWCQkWFgkJFhYJFgkJFgkWFgkJFhYJCRYJFgkWFgkJFgkAAUg='
+      command_off: '6RRGAN8JFgkJFhYJFgkWCQkWCRYJFhYJCRYJFhYJFgkWCQkWFgkWCRYJFgkWCRYJCRYJFgkWFgkJFhYJCRYWCRYJFgkWCQkAAUg='
+    t1_pb_led_low:
+      friendly_name: 'Đèn Phòng Bếp 1'
+      command_on: '6RRGAN8JCRYWCQkWCRYWCQkWFgkJFhYJCRYWCQkWFgkWCRYJFgkJFhYJFgkWCRYJCRYJFhYJFgkJFhYJCRYJFhYJFgkWCQkAAUg='
+      command_off: '6RRGAN8JCRYJFgkWCRYJFgkWCRYWCQkWCRYJFhYJFgkJFhYJCRYWCQkWFgkJFhYJCRYJFgkWFgkJFhYJFgkJFhYJFgkWCQkAAUg='
+    t1_pb_led_hight:
+      friendly_name: 'Đèn Phòng Bếp 2'
+      command_on: '6RRGAN8JFgkJFgkWCRYWCRYJCRYJFgkWCRYWCRYJFgkWCQkWCRYJFhYJCRYWCRYJCRYWCQkWFgkWCRYJCRYJFgkWFgkWCQkAAUg='
+      command_off: '6RRGAN8JCRYWCQkWCRYJFhYJFgkJFhYJFgkWCQkWCRYJFgkWFgkWCQkWFgkJFgkWCRYWCRYJCRYWCRYJFgkJFhYJCRYWCQkAAUg='
+    t2_pbm_toilet_led:
+      friendly_name: 'Đèn Phòng Tắm'
+      command_on: '6RRGAN8JFgkJFhYJCRYJFhYJFgkWCRYJCRYWCRYJFgkWCRYJCRYJFhYJFgkWCQkWCRYJFhYJCRYJFgkWCRYWCRYJFgkWCQkAAUg='
+      command_off: '6RRGAN8JFgkJFgkWFgkJFhYJFgkWCRYJFgkWCRYJFgkJFhYJFgkJFhYJFgkJFhYJCRYWCRYJCRYWCRYJFgkWCQkWCRYWCQkAAUg='
+    t2_pbm_toilet_hac:
+      friendly_name: 'Đèn hắc Phòng Tắm'
+      command_on: '6RRGAN8JFgkJFhYJFgkJFhYJFgkJFhYJFgkJFgkWFgkJFhYJFgkJFgkWCRYJFgkWFgkWCRYJCRYJFgkWCRYJFhYJCRYJFgkAAUg='
+      command_off: '6RRGAN8JCRYJFgkWCRYJFgkWCRYWCQkWCRYWCRYJCRYWCQkWFgkJFgkWFgkJFhYJCRYWCRYJCRYJFgkWCRYJFgkWCRYJFgkAAUg='
+    t2_pbm_toilet_quat:
+      friendly_name: 'Quạt hút Phòng Tắm'
+      command_on: '6RRGAN8JFgkWCRYJCRYJFhYJCRYJFhYJFgkWCRYJCRYJFhYJCRYWCQkWCRYJFhYJCRYWCQkWFgkWCRYJCRYJFgkWFgkWCQkAAUg='
+      command_off: '6RRGAN8JCRYWCQkWCRYWCRYJFgkWCRYJFgkWCQkWFgkWCQkWFgkJFhYJFgkWCRYJCRYWCRYJFgkWCRYJCRYJFgkWCRYWCQkAAUg='
+    t2_pdl_ngu_low:
+      friendly_name: 'Đèn Led Phòng Ngủ 1'
+      command_on: '6RRGAN8JFgkJFhYJCRYWCQkWCRYJFgkWCRYWCRYJCRYJFhYJFgkWCQkWFgkJFhYJCRYWCRYJCRYWCRYJCRYWCRYJCRYWCQkAAUg='
+      command_off: '6RRGAN8JCRYWCQkWCRYJFhYJFgkWCRYJCRYJFhYJFgkJFgkWCRYWCRYJFgkJFhYJFgkWCQkWCRYWCQkWCRYWCRYJFgkJFgkAAUg='
+    t2_pdl_ngu_hight:
+      friendly_name: 'Đèn Led Phòng Ngủ 2'
+      command_on: '6RRGAN8JCRYWCRYJFgkJFhYJFgkWCRYJCRYJFgkWCRYJFgkWFgkWCRYJFgkWCRYJFgkWCQkWCRYWCRYJFgkJFhYJFgkWCQkAAUg='
+      command_off: '6RRGAN8JFgkWCQkWCRYWCRYJFgkWCQkWFgkJFhYJCRYWCQkWCRYWCQkWFgkWCRYJFgkJFgkWCRYWCQkWFgkWCQkWFgkJFgkAAUg='
+    t2_pdl_ngu_tuyt:
+      friendly_name: 'Đèn Hắc Phòng Ngủ'
+      command_on: '6RRGAN8JFgkJFhYJCRYWCQkWFgkWCRYJCRYWCRYJFgkWCRYJFgkJFgkWFgkJFhYJCRYJFgkWCRYWCRYJCRYJFhYJFgkWCQkAAUg='
+      command_off: '6RRGAN8JCRYJFhYJFgkWCQkWCRYWCQkWFgkJFhYJFgkJFhYJCRYJFgkWFgkWCRYJCRYJFhYJCRYWCQkWCRYWCQkWCRYWCQkAAUg='
+    t2_pdl_toilet_quat:
+      friendly_name: 'Quạt hút Phòng Tắm'
+      command_on: '6RRGAN8JCRYJFhYJCRYJFgkWFgkJFhYJCRYJFgkWFgkWCQkWCRYJFgkWFgkWCQkWCRYJFhYJFgkJFgkWCRYJFgkWCRYJFgkAAUg='
+      command_off: '6RRGAN8JFgkJFgkWFgkWCQkWFgkJFgkWFgkJFhYJFgkJFgkWFgkWCRYJFgkJFhYJFgkWCRYJCRYWCQkWFgkJFhYJFgkWCQkAAUg='
+    t2_pdl_toilet_led:
+      friendly_name: 'Đèn Phòng Tắm'
+      command_on: '6RRGAN8JFgkWCQkWCRYJFgkWFgkWCRYJFgkWCQkWFgkJFgkWCRYJFhYJCRYJFgkWCRYJFhYJCRYJFhYJFgkWCQkWFgkJFgkAAUg='
+      command_off: '6RRGAN8JFgkWCRYJCRYJFhYJFgkJFhYJCRYWCQkWFgkJFhYJFgkJFgkWCRYJFgkWFgkJFgkWCRYJFhYJFgkWCQkWFgkJFgkAAUg='
+    t2_pdl_lavabo_led:
+      friendly_name: 'Đèn bồn rửa mặt'
+      command_on: '6RRGAN8JFgkJFgkWCRYWCRYJCRYWCRYJCRYJFhYJFgkJFgkWFgkJFhYJCRYWCRYJCRYWCQkWCRYJFhYJCRYJFhYJCRYWCQkAAUg='
+      command_off: '6RRGAN8JFgkWCRYJFgkJFgkWCRYJFhYJCRYJFgkWFgkJFhYJFgkJFhYJCRYJFhYJFgkJFhYJCRYWCQkWCRYWCQkWCRYWCQkAAUg='
+    t2_pdl_bancong_hac:
+      friendly_name: 'Đèn hắc ban công'
+      command_on: '6RRGAN8JFgkJFgkWCRYJFhYJCRYJFgkWFgkWCRYJFgkJFhYJFgkWCRYJCRYJFhYJFgkWCRYJCRYWCQkWCRYWCRYJFgkWCQkAAUg='
+      command_off: '6RRGAN8JCRYJFgkWFgkWCQkWCRYWCRYJCRYWCRYJCRYJFgkWCRYWCQkWCRYWCQkWFgkWCRYJCRYWCRYJFgkJFgkWCRYWCQkAAUg='
+    t2_pdl_bancong_led:
+      friendly_name: 'Đèn Led ban công'
+      command_on: '6RRGAN8JCRYWCQkWCRYJFgkWFgkWCQkWFgkJFhYJCRYJFhYJFgkJFhYJFgkJFgkWCRYWCQkWCRYWCQkWCRYWCQkWFgkWCQkAAUg='
+      command_off: '6RRGAN8JCRYWCRYJCRYWCRYJFgkJFgkWFgkJFhYJCRYJFgkWFgkJFhYJCRYJFhYJCRYWCQkWCRYWCQkWCRYWCQkWFgkJFgkAAUg='
+    t2_pk_led_low:
+      friendly_name: 'Đèn Phòng Khách T2 1'
+      command_on: '6RRGAN8JCRYWCQkWFgkWCRYJCRYJFhYJCRYJFgkWCRYWCRYJFgkWCQkWFgkJFhYJCRYWCQkWCRYJFgkWCRYWCRYJFgkJFgkAAUg='
+      command_off: '6RRGAN8JFgkWCRYJFgkWCRYJCRYJFgkWCRYWCQkWCRYJFhYJCRYWCQkWFgkWCQkWFgkJFgkWCRYJFgkWCRYWCRYJCRYWCQkAAUg='
+    t2_pk_led_hight:
+      friendly_name: 'Đèn Phòng Khách T2 2'
+      command_on: '6RRGAN8JFgkJFgkWFgkJFgkWCRYJFgkWFgkJFgkWCRYJFgkWFgkWCRYJCRYJFgkWCRYWCRYJCRYWCRYJFgkJFgkWFgkJFgkAAUg='
+      command_off: '6RRGAN8JFgkJFhYJFgkJFhYJCRYJFhYJFgkJFgkWCRYWCRYJFgkJFgkWCRYWCQkWFgkJFgkWCRYJFgkWFgkWCRYJCRYJFgkAAUg='
+    t2_pk_hac:
+      friendly_name: 'Đèn Hắc Phòng Khách T2'
+      command_on: '6RRGAN8JCRYJFhYJFgkJFhYJCRYWCRYJCRYWCQkWFgkWCQkWCRYJFhYJFgkJFgkWFgkJFgkWFgkWCRYJCRYJFgkWCRYJFgkAAUg='
+      command_off: '6RRGAN8JCRYWCQkWFgkJFhYJFgkJFhYJCRYJFhYJFgkWCQkWFgkWCQkWFgkWCRYJCRYWCQkWCRYJFgkWCRYJFgkWCRYWCQkAAUg='
+- platform: broadlink
+  host: 192.168.1.12
+  mac: '78:0F:77:27:EA:F6'
+  timeout: 15
+  switches:
+    t2_pdl_loa_tang:
+      friendly_name: 'Tăng Loa'
+      command_on: 'JgBQAAABKpIUERQ1FBEUERQRFBEUERQRFBAVEBQRFBEUERQ2FBAVNRQRFDUVEBU1FBEUNRQRFDYUNRQRFDYUEBU1FBEUNRQRFAAF4gABKkgUAA0FAAAAAAAAAAA='
+      command_off: 'JgBQAAABKpIUERQ1FBEUERQRFBEUERQRFBAVEBQRFBEUERQ2FBAVNRQRFDUVEBU1FBEUNRQRFDYUNRQRFDYUEBU1FBEUNRQRFAAF4gABKkgUAA0FAAAAAAAAAAA='
+    t2_pdl_loa_giam:
+      friendly_name: 'Giảm Loa'
+      command_on: 'JgBYAAABKpIUERQ1FBEUERQSExITERQRFBEUEBUQFBITEhM2FBEUNRQRFDUVEBU1FBEUNRQ2FBEUNRQSEzYUERQ1FBEUERQ1FAAF4wABKUgUAAxcAAEpSBQADQU='
+      command_off: 'JgBYAAABKpIUERQ1FBEUERQSExITERQRFBEUEBUQFBITEhM2FBEUNRQRFDUVEBU1FBEUNRQ2FBEUNRQSEzYUERQ1FBEUERQ1FAAF4wABKUgUAAxcAAEpSBQADQU='
+    t2_pdl_loa_power:
+      friendly_name: 'Bật/tắt'
+      command_on: 'JgBQAAABKZIUEhM2FBEUERQRExITEhMSExITEhMSExITERQ1FBITNhQRFBEUERMSExITEhMSEzUVNRQ1FTUUNRU1FDUVNRQRFAAF4gABKkcVAA0FAAAAAAAAAAA='
+      command_off: 'JgBQAAABKZIUEhM2FBEUERQRExITEhMSExITEhMSExITERQ1FBITNhQRFBEUERMSExITEhMSEzUVNRQ1FTUUNRU1FDUVNRQRFAAF4gABKkcVAA0FAAAAAAAAAAA='
+    t2_pdl_loa_input: 
+      friendly_name: 'Input'
+      command_on: 'JgBQAAABKZIUERQ1FRAUERQRFBEUERQRFBEUERQRFBAVEBU1FBEUNRUQFBEUERQ2FBAVEBUQFBEUNhQ1FDYUERQ1FDYUNRQ1FAAF4wABKUgUAA0FAAAAAAAAAAA='
+      command_off: 'JgBQAAABKZIUERQ1FRAUERQRFBEUERQRFBEUERQRFBAVEBU1FBEUNRUQFBEUERQ2FBAVEBUQFBEUNhQ1FDYUERQ1FDYUNRQ1FAAF4wABKUgUAA0FAAAAAAAAAAA='
+    t2_pdl_loa_mute: 
+      friendly_name: 'Mute'
+      command_on: 'JgBQAAABKZIVEBQ2FBEUERQRFBAVEBUQFBEUERQRFBEUERQ1FBEUNhQRFDUUERQ2FBEUNRQ1FTUUNRUQFTUUERQ1FBEUERQRFAAF4gABKkgUAA0FAAAAAAAAAAA='
+      command_off: 'JgBQAAABKZIVEBQ2FBEUERQRFBAVEBUQFBEUERQRFBEUERQ1FBEUNhQRFDUUERQ2FBEUNRQ1FTUUNRUQFTUUERQ1FBEUERQRFAAF4gABKkgUAA0FAAAAAAAAAAA='

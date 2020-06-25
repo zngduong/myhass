@@ -1,0 +1,57 @@
+Phòng khách:
+  entities:
+    - switch.t1_pk_led_low
+    - switch.t1_pk_led_hight
+    - switch.t1_pk_tuyt
+    - switch.den_hac_cua
+    - switch.den_hac_tivi
+Hiên:
+  entities:
+    - switch.t1_hien_led
+    - switch.t1_cong_led
+
+Phòng bếp:
+  entities:
+    - switch.t1_pb_led_low
+    - switch.t1_pb_led_hight
+    - switch.t1_pb_tuyt
+
+Phòng Khách T2:
+  entities:
+    - switch.t2_pk_led_low
+    - switch.t2_pk_led_hight
+    - switch.t2_pk_hac
+
+Phòng Tắm Phòng Ba mẹ:
+  entities:
+    - switch.t2_pbm_toilet_led
+    - switch.t2_pbm_toilet_hac
+    - switch.t2_pbm_toilet_quat
+
+Phòng Ngủ Dương: 
+  entities:
+    - switch.t2_pdl_ngu_low
+    - switch.t2_pdl_ngu_hight
+    - switch.t2_pdl_ngu_tuyt
+
+Phòng Tắm Dương: 
+  entities:
+    - switch.t2_pdl_toilet_quat
+    - switch.t2_pdl_toilet_led
+    - switch.t2_pdl_lavabo_led
+
+Ban Công T2: 
+  entities:
+    - switch.t2_pdl_bancong_hac
+    - switch.t2_pdl_bancong_led
+
+Nước nóng:
+  entities:
+    - switch.nuoc_nong
+    - sensor.nuoc_nong_voltage
+    - sensor.nuoc_nong_current
+    - sensor.nuoc_nong_power
+    - sensor.nuoc_nong_power_factor
+    - sensor.nuoc_nong_energy_today
+    - sensor.nuoc_nong_energy_yesterday
+    - sensor.nuoc_nong_energy_total
