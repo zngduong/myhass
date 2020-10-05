@@ -8,9 +8,8 @@
   action:
   - service: switch.toggle
     data_template:
-      entity_id: '{% if trigger.event.data.action_value | float > 0 %} switch.t2_pdl_loa_tang
-        {% else %} switch.t2_pdl_loa_giam {% endif %}
-
+      entity_id: '{% if trigger.event.data.action_value | float > 0 %} switch.tang_loa
+        {% else %} switch.giam_loa {% endif %}
         '
   id: faf4280e3672444c8d69a807c23ec499
 - alias: Cube event flip90
@@ -22,13 +21,13 @@
       action_type: flip90
   action:
   - service: switch.toggle
-    entity_id: switch.t2_pdl_loa_input
+    entity_id: switch.input
   - delay: 00:00:01
   - service: switch.toggle
-    entity_id: switch.t2_pdl_loa_input
+    entity_id: switch.input
   - delay: 00:00:01
   - service: switch.toggle
-    entity_id: switch.t2_pdl_loa_input
+    entity_id: switch.input
   id: 6528b7e413ff4462921ab8d2706affa4
 - alias: Cube event flip180
   trigger:
@@ -50,7 +49,7 @@
       action_type: tap_twice
   action:
   - service: switch.toggle
-    entity_id: switch.t2_pdl_loa_mute
+    entity_id: switch.mute
   id: 93bf6d6e452148e29b74526c959e4252
 - alias: Cube event shake_air
   trigger:
@@ -61,26 +60,8 @@
       action_type: shake_air
   action:
   - service: switch.toggle
-    entity_id: switch.t2_pdl_loa_power
+    entity_id: switch.bat_tat
   id: 41020be97c554977b8a6a5d4dd5b5682
-- alias: Sensor turn on light master room
-  trigger:
-    platform: state
-    entity_id: binary_sensor.door_window_sensor_1
-    to: 'on'
-  condition:
-  - condition: template
-    value_template: '{{ (as_timestamp(now()) - as_timestamp(states.binary_sensor.motion_sensor_2.last_changed))
-      < 10 }}
-
-      '
-  - condition: time
-    after: '17:30:00'
-    before: 00:00:00
-  action:
-  - service: switch.turn_on
-    entity_id: switch.t2_pdl_ngu_hight
-  id: 0d6be32579b14a5aab68c3d3f620f774
 - id: 14c90002cdde436ca3feaff49cd3fad3
   alias: Sensor event turn light on T3
   trigger:
@@ -141,7 +122,7 @@
       < 10 }}'
   action:
   - data: {}
-    entity_id: switch.t2_pdl_ngu_hight
+    entity_id: switch.den_led_phong_ngu_2
     service: switch.turn_on
 - id: '1588679607431'
   alias: Tự bật đèn phòng khách
@@ -152,8 +133,9 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.t1_pk_led_hight
+    entity_id: switch.den_phong_khach_2
     service: switch.turn_on
+  mode: single
 - id: '1588679799344'
   alias: Tự bật đèn cổng
   description: ''
@@ -172,9 +154,24 @@
     - fri
   action:
   - data: {}
-    entity_id: switch.t1_cong_led
+    entity_id: switch.den_cong
     service: switch.turn_on
   - delay: 00:00:30
   - data: {}
     entity_id: switch.t1_cong_led
     service: switch.turn_off
+  mode: single
+- id: '1600651846609'
+  alias: Tự tưới cây
+  description: ''
+  trigger:
+  - platform: time
+    at: 09:00
+  condition:
+  - condition: template
+    value_template: '{{ state_attr(''weather.home'',''temperature'') > 27 }}'
+  action:
+  - service: script.turn_on
+    data: {}
+    entity_id: script.tuoi_cay
+  mode: single

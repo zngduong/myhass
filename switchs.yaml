@@ -64,7 +64,6 @@
 - platform: broadlink
   host: 192.168.1.11
   mac: '78:0F:77:17:F1:2D'
-  timeout: 15
   switches:
     t1_hien_led:
       friendly_name: 'Đèn Hiên'
@@ -157,7 +156,6 @@
 - platform: broadlink
   host: 192.168.1.12
   mac: '78:0F:77:27:EA:F6'
-  timeout: 15
   switches:
     t2_pdl_loa_tang:
       friendly_name: 'Tăng Loa'

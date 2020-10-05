@@ -27,7 +27,7 @@ chicken_room_motion:
       name: 'Phòng Bếp:'
     service: logbook.log
   alias: Tự động bật đèn bếp
-'1588904820871':
+tuoi_cay:
   alias: Tưới cây
   sequence:
   - data: {}
